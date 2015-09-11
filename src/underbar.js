@@ -351,6 +351,40 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+
+    var order = randomOrderGenerator(array.length);
+    var result = [];
+    _.each(order, function(val, ind) {
+      result[ind] = array[val];
+    })
+    return result;
+
+    function randomOrderGenerator(n) {
+      var arr = [];
+      for ( var i = 0; i < n; i ++ ) {
+        arr[i] = {};
+        arr[i].rand = Math.random();
+        arr[i].orig = i;
+      }
+
+      //order the random numbers from least to greatest
+      var sorted = [];
+      while ( arr[0] !== undefined ) {
+        var min = arr[0].rand;
+        var min_index = 0;
+        for ( var i = 1; i < arr.length; i ++ ) {
+          if ( arr[i].rand < min ) {
+            min = arr[i].rand;
+            min_index = i;
+          }
+        }
+        sorted.push(arr.splice(min_index,1)[0].orig);
+      }
+
+      return sorted;
+       
+    }
+
   };
 
 
